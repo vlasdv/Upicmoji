@@ -22,7 +22,7 @@ struct MemojiTextViewRepresentable: UIViewRepresentable {
     func makeUIView(context: Context) -> MemojiTextView {
         let textView = MemojiTextView()
         textView.allowsEditingTextAttributes = true
-        textView.delegate = context.coordinator        
+        textView.delegate = context.coordinator
         return textView
     }
 
@@ -45,34 +45,47 @@ struct MemojiTextViewRepresentable: UIViewRepresentable {
                     if let attachment = value as? NSTextAttachment {
                         if let image = attachment.image {
                             parent.image = image
-                        } else if let data = attachment.fileWrapper?.regularFileContents, let image = UIImage(data: data) {
-                            parent.image = image
+                            textView.resignFirstResponder()
                         }
                     }
                 }
             }
-            textView.text = "" // Reset the text view after processing
+            textView.text = ""
         }
     }
 }
 
 struct ContentView: View {
     @State private var selectedImage: UIImage?
-    @State private var text: String = ""
+    @State private var selectedColor = Color.blue
 
     var body: some View {
-        VStack {
-            if let image = selectedImage {
-                Image(uiImage: image)
-                    .resizable()
-                    .frame(width: 100, height: 100)
-                    .scaledToFill()
-                    .background(.red)
+        NavigationStack {
+            VStack {
+                ZStack {
+                    Color(selectedColor)
+
+                    if let image = selectedImage {
+                        Image(uiImage: image)
+                            .resizable()
+                            .scaledToFill()
+                    }
+                }
+                .frame(width: 350, height: 350)
+                .clipShape(.rect(cornerRadius: 10))
+
+
+                ColorPicker("Select background color", selection: $selectedColor)
+                    .padding(.horizontal)
+
+                Spacer()
+
+                MemojiTextViewRepresentable(image: $selectedImage)
+
             }
-            Spacer()
-            MemojiTextViewRepresentable(image: $selectedImage)
+            .navigationTitle("Upicmoji")
+            .padding()
         }
-        .padding()
     }
 }
 
