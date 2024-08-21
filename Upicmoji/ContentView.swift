@@ -55,24 +55,6 @@ struct MemojiTextViewRepresentable: UIViewRepresentable {
     }
 }
 
-struct UserpicView: View {
-    var uiImage: UIImage?
-    var bgColor: Color
-
-    var body: some View {
-            ZStack {
-                Color(bgColor)
-
-                if let uiImage {
-                    Image(uiImage: uiImage)
-                        .resizable()
-                        .scaledToFit()
-                }
-            }
-            .frame(width: 350, height: 350)
-    }
-}
-
 struct ContentView: View {
     @State private var selectedColor = Color.blue
     @State private var selectedImage: UIImage?
