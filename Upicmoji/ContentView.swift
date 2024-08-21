@@ -14,14 +14,18 @@ struct ContentView: View {
     var body: some View {
         NavigationStack {
             VStack {
-                Spacer()
-                UserpicView(uiImage: selectedImage, bgColor: selectedColor)
-                    .clipShape(.rect(cornerRadius: 10))
+//                Spacer()
+                ZStack(alignment: .bottomTrailing, content: {
+                    UserpicView(uiImage: selectedImage, bgColor: selectedColor)
+                        .clipShape(.rect(cornerRadius: 10))
+
+                    CustomImagePasteButton(image: $selectedImage)
+                        .frame(alignment: .bottomTrailing)
+                        .padding()
+                })
 
                 ColorPicker("Select background color", selection: $selectedColor)
                     .padding(.horizontal)
-                Spacer()
-                CustomImagePasteButton(image: $selectedImage)
                 Spacer()
             }
             .navigationTitle("Upicmoji")
