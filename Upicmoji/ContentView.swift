@@ -55,7 +55,7 @@ struct MemojiTextViewRepresentable: UIViewRepresentable {
     }
 }
 
-struct MemojiView: View {
+struct UserpicView: View {
     var uiImage: UIImage?
     var bgColor: Color
 
@@ -66,12 +66,36 @@ struct MemojiView: View {
                 if let uiImage {
                     Image(uiImage: uiImage)
                         .resizable()
-                        .scaledToFill()
+                        .scaledToFit()
                 }
             }
             .frame(width: 350, height: 350)
-            .clipShape(.rect(cornerRadius: 10))
     }
+}
+
+import UniformTypeIdentifiers
+
+struct ImagePasteButton: View {
+  @Binding var image: UIImage?
+
+  var body: some View {
+    VStack {
+      PasteButton(supportedContentTypes: [UTType.image]) { info in
+        for item in info {
+          item.loadObject(ofClass: UIImage.self) { item, error in
+            if let img = item as? UIImage {
+              image = img
+            }
+          }
+        }
+      }
+//      .labelStyle(.titleOnly)
+//      .scaleEffect(0.8)
+      .labelStyle(.iconOnly)
+//      .buttonBorderShape(.capsule)
+      .tint(.secondary)
+    }
+  }
 }
 
 struct ContentView: View {
@@ -81,11 +105,16 @@ struct ContentView: View {
     var body: some View {
         NavigationStack {
             VStack {
-                MemojiView(uiImage: selectedImage, bgColor: selectedColor)
+                Spacer()
+                UserpicView(uiImage: selectedImage, bgColor: selectedColor)
+                    .clipShape(.rect(cornerRadius: 10))
+
                 ColorPicker("Select background color", selection: $selectedColor)
                     .padding(.horizontal)
                 Spacer()
-                MemojiTextViewRepresentable(image: $selectedImage)
+                ImagePasteButton(image: $selectedImage)
+                Spacer()
+//                MemojiTextViewRepresentable(image: $selectedImage)
             }
             .navigationTitle("Upicmoji")
             .padding()
@@ -99,7 +128,7 @@ struct ContentView: View {
     }
 
     @MainActor private func imageToShare() -> Image? {
-        let renderer = ImageRenderer(content: MemojiView(uiImage: selectedImage, bgColor: selectedColor))
+        let renderer = ImageRenderer(content: UserpicView(uiImage: selectedImage, bgColor: selectedColor))
         if let uiImage = renderer.uiImage {
             return Image(uiImage: uiImage)
         } else {
