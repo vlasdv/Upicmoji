@@ -7,9 +7,25 @@
 
 import SwiftUI
 
+enum BackgroundStyle {
+    case plain, gradient
+}
+
 struct ContentView: View {
-    @State private var selectedColor = Color.blue
     @State private var selectedImage: UIImage?
+
+    @State private var backgroundStyle = BackgroundStyle.plain
+    
+    var selectedColor: LinearGradient {
+        if backgroundStyle == .plain {
+            return LinearGradient(colors: [firstColor, firstColor], startPoint: .bottom, endPoint: .top)
+        } else {
+            return LinearGradient(colors: [firstColor, secondColor], startPoint: .bottom, endPoint: .top)
+        }
+    }
+    
+    @State private var firstColor = Color.blue
+    @State private var secondColor = Color.black
 
     var body: some View {
         NavigationStack {
@@ -23,9 +39,24 @@ struct ContentView: View {
                         .frame(alignment: .bottomTrailing)
                         .padding()
                 })
+                Divider()
+                    .padding(.vertical)
 
-                ColorPicker("Select background color", selection: $selectedColor)
-                    .padding(.horizontal)
+                Picker("Background Style", selection: $backgroundStyle) {
+                    Text("Plain").tag(BackgroundStyle.plain)
+                    Text("Gradient").tag(BackgroundStyle.gradient)
+                }
+                .pickerStyle(.segmented)
+                
+                if backgroundStyle == .plain {
+                    ColorPicker("Select background color", selection: $firstColor)
+                        .padding(.horizontal)
+                } else {
+                    ColorPicker("Select first color", selection: $firstColor)
+                        .padding(.horizontal)
+                    ColorPicker("Select second color", selection: $secondColor)
+                        .padding(.horizontal)
+                }
                 Spacer()
             }
             .navigationTitle("Upicmoji")

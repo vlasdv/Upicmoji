@@ -9,11 +9,13 @@ import SwiftUI
 
 struct UserpicView: View {
     var uiImage: UIImage?
-    var bgColor: Color
+    var bgColor: LinearGradient
 
     var body: some View {
             ZStack {
-                Color(bgColor)
+//                Color(bgColor)
+                Rectangle()
+                    .fill(bgColor)
 
                 if let uiImage {
                     Image(uiImage: uiImage)
@@ -26,5 +28,5 @@ struct UserpicView: View {
 }
 
 #Preview {
-    UserpicView(uiImage: UIImage(), bgColor: .blue)
+    UserpicView(uiImage: UIImage(), bgColor: LinearGradient(colors: [.blue, .green], startPoint: .bottom, endPoint: .top))
 }
