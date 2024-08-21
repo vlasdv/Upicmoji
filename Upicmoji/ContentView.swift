@@ -55,36 +55,55 @@ struct MemojiTextViewRepresentable: UIViewRepresentable {
     }
 }
 
+struct MemojiView: View {
+    var uiImage: UIImage?
+    var bgColor: Color
+
+    var body: some View {
+            ZStack {
+                Color(bgColor)
+
+                if let uiImage {
+                    Image(uiImage: uiImage)
+                        .resizable()
+                        .scaledToFill()
+                }
+            }
+            .frame(width: 350, height: 350)
+            .clipShape(.rect(cornerRadius: 10))
+    }
+}
+
 struct ContentView: View {
-    @State private var selectedImage: UIImage?
     @State private var selectedColor = Color.blue
+    @State private var selectedImage: UIImage?
 
     var body: some View {
         NavigationStack {
             VStack {
-                ZStack {
-                    Color(selectedColor)
-
-                    if let image = selectedImage {
-                        Image(uiImage: image)
-                            .resizable()
-                            .scaledToFill()
-                    }
-                }
-                .frame(width: 350, height: 350)
-                .clipShape(.rect(cornerRadius: 10))
-
-
+                MemojiView(uiImage: selectedImage, bgColor: selectedColor)
                 ColorPicker("Select background color", selection: $selectedColor)
                     .padding(.horizontal)
-
                 Spacer()
-
                 MemojiTextViewRepresentable(image: $selectedImage)
-
             }
             .navigationTitle("Upicmoji")
             .padding()
+            .toolbar {
+                if let imageToShare = imageToShare() {
+                    let _ = print("here")
+                    ShareLink(item: imageToShare, preview: SharePreview("Userpic", image: imageToShare))
+                }
+            }
+        }
+    }
+
+    @MainActor private func imageToShare() -> Image? {
+        let renderer = ImageRenderer(content: MemojiView(uiImage: selectedImage, bgColor: selectedColor))
+        if let uiImage = renderer.uiImage {
+            return Image(uiImage: uiImage)
+        } else {
+            return nil
         }
     }
 }
