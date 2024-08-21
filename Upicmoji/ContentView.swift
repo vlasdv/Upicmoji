@@ -73,29 +73,40 @@ struct UserpicView: View {
     }
 }
 
-import UniformTypeIdentifiers
+struct CustomImagePasteButton: View {
+    @State private var isPasteAvailable = false
+    @Binding var image: UIImage?
+    @Environment(\.scenePhase) var scenePhase
 
-struct ImagePasteButton: View {
-  @Binding var image: UIImage?
-
-  var body: some View {
-    VStack {
-      PasteButton(supportedContentTypes: [UTType.image]) { info in
-        for item in info {
-          item.loadObject(ofClass: UIImage.self) { item, error in
-            if let img = item as? UIImage {
-              image = img
-            }
-          }
+    var body: some View {
+        Button(action: handlePaste) {
+            Text("Paste")
+                .padding()
+                .background(isPasteAvailable ? Color.blue : Color.gray)
+                .foregroundColor(.white)
+                .cornerRadius(8)
         }
-      }
-//      .labelStyle(.titleOnly)
-//      .scaleEffect(0.8)
-      .labelStyle(.iconOnly)
-//      .buttonBorderShape(.capsule)
-      .tint(.secondary)
+        .onAppear(perform: checkPasteboard)
+        .onChange(of: UIPasteboard.general.string, checkPasteboard)
+        .onChange(of: scenePhase, checkPasteboard)
     }
-  }
+
+    private func checkPasteboard() {
+        if let _ = UIPasteboard.general.image {
+            isPasteAvailable = true
+            print("paste available")
+        } else {
+            isPasteAvailable = false
+        }
+    }
+
+    private func handlePaste() {
+        if let pastedImage = UIPasteboard.general.image {
+//            print("Pasted Image: \(image)")
+            // Handle pasted image
+            image = pastedImage
+        }
+    }
 }
 
 struct ContentView: View {
@@ -112,7 +123,7 @@ struct ContentView: View {
                 ColorPicker("Select background color", selection: $selectedColor)
                     .padding(.horizontal)
                 Spacer()
-                ImagePasteButton(image: $selectedImage)
+                CustomImagePasteButton(image: $selectedImage)
                 Spacer()
 //                MemojiTextViewRepresentable(image: $selectedImage)
             }
