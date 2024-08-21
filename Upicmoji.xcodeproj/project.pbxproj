@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		67F4E6FD2C762ECA00ED0FCD /* CustomImagePasteButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 67F4E6FC2C762ECA00ED0FCD /* CustomImagePasteButton.swift */; };
 		67FF8F3B2C74D7C7009E88CD /* UpicmojiApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 67FF8F3A2C74D7C7009E88CD /* UpicmojiApp.swift */; };
 		67FF8F3D2C74D7C7009E88CD /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 67FF8F3C2C74D7C7009E88CD /* ContentView.swift */; };
 		67FF8F3F2C74D7C8009E88CD /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 67FF8F3E2C74D7C8009E88CD /* Assets.xcassets */; };
@@ -14,6 +15,7 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		67F4E6FC2C762ECA00ED0FCD /* CustomImagePasteButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomImagePasteButton.swift; sourceTree = "<group>"; };
 		67FF8F372C74D7C7009E88CD /* Upicmoji.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Upicmoji.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		67FF8F3A2C74D7C7009E88CD /* UpicmojiApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UpicmojiApp.swift; sourceTree = "<group>"; };
 		67FF8F3C2C74D7C7009E88CD /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
@@ -53,6 +55,7 @@
 			children = (
 				67FF8F3A2C74D7C7009E88CD /* UpicmojiApp.swift */,
 				67FF8F3C2C74D7C7009E88CD /* ContentView.swift */,
+				67F4E6FC2C762ECA00ED0FCD /* CustomImagePasteButton.swift */,
 				67FF8F3E2C74D7C8009E88CD /* Assets.xcassets */,
 				67FF8F402C74D7C8009E88CD /* Preview Content */,
 			);
@@ -137,6 +140,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				67F4E6FD2C762ECA00ED0FCD /* CustomImagePasteButton.swift in Sources */,
 				67FF8F3D2C74D7C7009E88CD /* ContentView.swift in Sources */,
 				67FF8F3B2C74D7C7009E88CD /* UpicmojiApp.swift in Sources */,
 			);
