@@ -35,11 +35,7 @@ struct CustomImagePasteButton: View {
     }
 
     private func handlePaste() {
-        if let pastedImage = UIPasteboard.general.image {
-//            print("Pasted Image: \(image)")
-            // Handle pasted image
-            image = pastedImage
-        }
+        if let pastedImage = UIPasteboard.general.image { image = pastedImage }
     }
 }
 #Preview {

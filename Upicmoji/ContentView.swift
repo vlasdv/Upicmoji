@@ -23,7 +23,6 @@ struct ContentView: View {
                 Spacer()
                 CustomImagePasteButton(image: $selectedImage)
                 Spacer()
-//                MemojiTextViewRepresentable(image: $selectedImage)
             }
             .navigationTitle("Upicmoji")
             .padding()
